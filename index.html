@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="pl" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Chiny 2026 Duo-Hub | Daria & Michał</title>
+  <meta name="theme-color" content="#991B1B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Chiny 2026">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: '#B91C1C',
+              darkred: '#7F1D1D',
+              gold: '#F59E0B',
+              dark: '#0B0F19',
+              card: '#151D2F',
+              border: '#23304A'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* iOS smooth scrolling and safe area padding */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: calc(env(safe-area-inset-bottom) + 80px);
+      -webkit-font-smoothing: antialiased;
+    }
+    .tap-highlight-transparent {
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen tap-highlight-transparent selection:bg-brand-red selection:text-white">
+
+  <!-- TOP BAR -->
+  <header class="sticky top-0 z-40 bg-slate-950/85 backdrop-blur-md border-b border-slate-800/80 px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center space-x-2.5">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-600 to-amber-600 flex items-center justify-center font-bold text-white shadow-lg shadow-red-900/40">
+        CN
+      </div>
+      <div>
+        <h1 class="text-sm font-bold tracking-tight text-white flex items-center gap-1.5">
+          Chiny 2026 Duo-Hub
+          <span class="text-[10px] bg-red-900/60 text-red-200 border border-red-700/60 px-1.5 py-0.2 rounded font-medium">Daria & Michał</span>
+        </h1>
+        <p class="text-[11px] text-slate-400">1–11 Grudnia • Szanghaj & Pekin</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <span id="offline-badge" class="flex items-center gap-1 text-[11px] bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 px-2 py-0.5 rounded-full font-medium">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Offline Ready
+      </span>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-md mx-auto px-4 pt-3 pb-8">
+
+    <!-- TAB 1: HARMONOGRAM (DNI) -->
+    <section id="tab-schedule" class="space-y-4">
+      <!-- Quick Flight Banner -->
+      <div class="bg-gradient-to-r from-red-950/60 via-slate-900 to-amber-950/40 border border-red-800/40 rounded-2xl p-3.5 shadow-md">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-amber-400 flex items-center gap-1">
+            ✈️ Rezerwacja Lotnicza (PNR)
+          </span>
+          <span class="text-xs font-mono font-bold text-white bg-slate-800/90 px-2 py-0.5 rounded border border-slate-700">9BHZLH</span>
+        </div>
+        <div class="text-xs text-slate-300 font-medium">POZ ➔ FRA ➔ PVG (Szanghaj) • Powrót: PKX (Pekin) ➔ FRA ➔ POZ</div>
+      </div>
+
+      <!-- Days Carousel Horizontal Selector -->
+      <div class="flex items-center gap-2 overflow-x-auto hide-scrollbar py-1" id="days-selector">
+        <!-- populated by JS -->
+      </div>
+
+      <!-- Active Day Detail Card -->
+      <div id="active-day-content" class="space-y-3">
+        <!-- populated by JS -->
+      </div>
+    </section>
+
+    <!-- TAB 2: FISZKI DLA KIEROWCY (DRIVER MODE) -->
+    <section id="tab-flashcards" class="hidden space-y-4">
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 shadow-md">
+        <h2 class="text-sm font-bold text-white flex items-center gap-2 mb-1">
+          🚖 Tryb dla Kierowcy i Obsługi
+        </h2>
+        <p class="text-xs text-slate-400 mb-2.5">
+          Kliknij dowolną kartę, aby otworzyć <strong>wielkie chińskie znaki (Hanzi)</strong> na cały ekran telefonu do pokazania taksówkarzowi.
+        </p>
+        <!-- Search filter input -->
+        <div class="relative">
+          <input type="text" id="flashcard-search" placeholder="Szukaj miejsca (np. hotel, dworzec, tama, kaczka)..." 
+                 class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-red-500">
+        </div>
+      </div>
+
+      <!-- Flashcards Grid -->
+      <div id="flashcards-list" class="space-y-2.5">
+        <!-- populated by JS -->
+      </div>
+    </section>
+
+    <!-- TAB 3: CHECKLISTY -->
+    <section id="tab-checklists" class="hidden space-y-4">
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 shadow-md">
+        <div class="flex justify-between items-center mb-1">
+          <h2 class="text-sm font-bold text-white flex items-center gap-2">
+            📋 Zadania i Pakowanie dla Pary
+          </h2>
+          <span id="checklist-progress" class="text-xs font-semibold text-amber-400">0/0</span>
+        </div>
+        <p class="text-xs text-slate-400">Postęp zapisuje się automatycznie w pamięci Twojego telefonu.</p>
+        
+        <!-- Checklist Sub-tabs -->
+        <div class="flex gap-2 mt-3 text-xs">
+          <button onclick="switchChecklistCategory('przed_wylotem')" id="btn-cat-przed" class="px-2.5 py-1 rounded-lg bg-red-800 text-white font-medium">Przed wylotem</button>
+          <button onclick="switchChecklistCategory('rezerwacje')" id="btn-cat-rez" class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 font-medium">Rezerwacje</button>
+          <button onclick="switchChecklistCategory('pakowanie')" id="btn-cat-pak" class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 font-medium">Pakowanie</button>
+        </div>
+      </div>
+
+      <div id="checklist-items" class="space-y-2">
+        <!-- populated by JS -->
+      </div>
+    </section>
+
+    <!-- TAB 4: SOS & AMBASADA -->
+    <section id="tab-sos" class="hidden space-y-4">
+      <div class="bg-red-950/40 border border-red-800/60 rounded-2xl p-4 shadow-md space-y-3">
+        <h2 class="text-base font-bold text-red-300 flex items-center gap-2">
+          🚨 Numery Alarmowe w Chinach
+        </h2>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <a href="tel:110" class="flex flex-col items-center justify-center p-3 rounded-xl bg-red-900/50 border border-red-700/60 text-white font-bold active:scale-95 transition">
+            <span class="text-lg">👮 110</span>
+            <span class="text-[10px] font-normal text-red-200">Policja</span>
+          </a>
+          <a href="tel:120" class="flex flex-col items-center justify-center p-3 rounded-xl bg-red-900/50 border border-red-700/60 text-white font-bold active:scale-95 transition">
+            <span class="text-lg">🚑 120</span>
+            <span class="text-[10px] font-normal text-red-200">Pogotowie</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Consulates -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400">Polskie Placówki Dyplomatyczne</h3>
+        
+        <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 space-y-1.5">
+          <div class="flex justify-between items-start">
+            <h4 class="text-xs font-bold text-white">Ambasada RP w Pekinie</h4>
+            <a href="tel:+8618612532340" class="text-[11px] bg-red-900/70 border border-red-600 text-red-200 px-2 py-0.5 rounded font-bold">Alarmowy 24h</a>
+          </div>
+          <p class="text-[11px] text-slate-400">1 Ritan Lu, Jianguomenwai, Chaoyang District</p>
+          <div class="text-[11px] font-mono text-emerald-400">+86 186 1253 2340</div>
+        </div>
+
+        <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 space-y-1.5">
+          <div class="flex justify-between items-start">
+            <h4 class="text-xs font-bold text-white">Konsulat Generalny RP w Szanghaju</h4>
+            <a href="tel:+8613817920940" class="text-[11px] bg-red-900/70 border border-red-600 text-red-200 px-2 py-0.5 rounded font-bold">Alarmowy 24h</a>
+          </div>
+          <p class="text-[11px] text-slate-400">618 Jianguo West Road, Xuhui District</p>
+          <div class="text-[11px] font-mono text-emerald-400">+86 138 1792 0940</div>
+        </div>
+      </div>
+
+      <!-- Crisis protocols -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2.5">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">Protokoły Kryzysowe</h3>
+        <details class="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800 text-xs">
+          <summary class="font-semibold text-slate-200 cursor-pointer">📱 Zgubienie lub kradzież telefonu</summary>
+          <p class="mt-1.5 text-slate-400 text-[11px] leading-relaxed">
+            1. Nie panikuj. Zaloguj się z drugiego telefonu (Michał/Daria) na konto Alipay/WeChat i zablokuj sesję.<br>
+            2. Zablokuj karty w polskim banku przez aplikację lub infolinię.<br>
+            3. Zgłoś utratę w lokalnym posterunku policji (PSB) w celu otrzymania protokołu dla ubezpieczyciela.
+          </p>
+        </details>
+        <details class="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800 text-xs">
+          <summary class="font-semibold text-slate-200 cursor-pointer">🛂 Zgubienie paszportu</summary>
+          <p class="mt-1.5 text-slate-400 text-[11px] leading-relaxed">
+            1. Pobierz zaświadczenie o zgłoszeniu utraty dokumentu w posterunku policji (PSB).<br>
+            2. Udaj się do Ambasady w Pekinie lub Konsulatu w Szanghaju po paszport tymczasowy.<br>
+            3. Zgłoś się do Biura Wyjazdowego (Exit-Entry Bureau) po wizę wyjazdową.
+          </p>
+        </details>
+        <details class="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800 text-xs">
+          <summary class="font-semibold text-slate-200 cursor-pointer">💳 Odrzucenie płatności kartą w Alipay</summary>
+          <p class="mt-1.5 text-slate-400 text-[11px] leading-relaxed">
+            1. Płatności powyżej 200 RMB doliczają +3% i czasem wymagają potwierdzenia banku.<br>
+            2. Spróbuj rozbić kwotę poniżej 200 RMB lub użyj drugiej podpiętej karty.<br>
+            3. Sięgnij po rezerwę gotówkową RMB.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- TAB 5: O PODRÓŻY & AUDIO PODCAST -->
+    <section id="tab-info" class="hidden space-y-4">
+      <div class="bg-gradient-to-br from-amber-950/40 via-slate-900 to-slate-900 border border-amber-800/40 rounded-2xl p-4 shadow-md space-y-3">
+        <h2 class="text-sm font-bold text-amber-300 flex items-center gap-2">
+          🎧 Podcast Audio (NotebookLM Deep Dive)
+        </h2>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          12-minutowe podsumowanie audio wygenerowane przez AI specjalnie dla Was na czas 10-godzinnego lotu do Szanghaju.
+        </p>
+        <div class="p-3 bg-slate-950/90 rounded-xl border border-slate-800 flex items-center justify-between">
+          <div>
+            <div class="text-xs font-bold text-white">Chiny 2026: Szanghaj & Pekin</div>
+            <div class="text-[11px] text-slate-400">Deep Dive Podcast • 12:45 min</div>
+          </div>
+          <span class="text-xs bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2 py-1 rounded-lg font-medium">MP3 Gotowe</span>
+        </div>
+      </div>
+
+      <!-- General tips -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 text-xs text-slate-300 leading-relaxed">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-white">Złote Zasady w Chinach</h3>
+        <ul class="space-y-1.5 list-disc list-inside text-slate-400">
+          <li><strong class="text-slate-200">Kolej HSR:</strong> Przybądź na dworzec 60 min wcześniej; kieruj się do skrajnej bramki manualnej z paszportem.</li>
+          <li><strong class="text-slate-200">Świątynia Lamy (Yonghegong):</strong> Otwarta w poniedziałki! Wejście do 16:00. Darmowe kadzidła w cenie biletu – nie kupuj na ulicy.</li>
+          <li><strong class="text-slate-200">Zakazane Miasto:</strong> Wtorek 8 grudnia – wstęp tylko z wcześniejszą rezerwacją WeChat.</li>
+          <li><strong class="text-slate-200">Herbata i toasty:</strong> Brzeg Twojego kieliszka trzymaj niżej niż gospodarza na znak szacunku.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FULLSCREEN DRIVER FLASHCARD MODAL -->
+  <div id="flashcard-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex flex-col justify-between p-6">
+    <div class="flex justify-between items-center">
+      <span id="modal-category" class="text-xs uppercase font-bold tracking-widest text-amber-400 px-2.5 py-1 rounded-full bg-amber-950/80 border border-amber-800/60"></span>
+      <button onclick="closeFlashcardModal()" class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-lg active:scale-90 transition">✕</button>
+    </div>
+
+    <!-- Main huge character block -->
+    <div class="my-auto text-center space-y-4 px-2">
+      <div id="modal-title-pl" class="text-sm font-medium text-slate-400"></div>
+      <div id="modal-hanzi" class="text-3xl sm:text-4xl font-extrabold text-white leading-relaxed select-all tracking-wide py-4 px-2 bg-slate-900/60 rounded-2xl border border-slate-800"></div>
+      <div id="modal-pinyin" class="text-sm sm:text-base font-mono text-amber-300 leading-relaxed"></div>
+    </div>
+
+    <!-- Bottom Action Bar -->
+    <div class="space-y-3">
+      <div class="grid grid-cols-2 gap-3">
+        <button onclick="speakChinese()" class="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs flex items-center justify-center gap-2 active:scale-95 transition border border-slate-700">
+          🔊 Odsłuchaj Wymowę
+        </button>
+        <button onclick="copyHanziText()" id="btn-copy-hanzi" class="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs flex items-center justify-center gap-2 active:scale-95 transition border border-slate-700">
+          📋 Kopiuj Znaki
+        </button>
+      </div>
+      <button onclick="openAppleMaps()" id="btn-open-maps" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-red-700 to-amber-600 text-white font-bold text-xs flex items-center justify-center gap-2 active:scale-95 transition shadow-lg shadow-red-900/40">
+        📍 Otwórz w Mapach (Apple Maps / Amap)
+      </button>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAVIGATION DOCK (iOS Style) -->
+  <nav class="fixed bottom-0 inset-x-0 z-40 bg-slate-950/90 backdrop-blur-lg border-t border-slate-800/80 px-2 py-2 flex justify-around items-center max-w-md mx-auto">
+    <button onclick="switchTab('schedule')" id="nav-schedule" class="flex flex-col items-center gap-1 text-red-500 font-semibold text-[10px] w-16 py-1 tap-highlight-transparent">
+      <span class="text-lg">📅</span>
+      <span>Plan</span>
+    </button>
+    <button onclick="switchTab('flashcards')" id="nav-flashcards" class="flex flex-col items-center gap-1 text-slate-400 font-medium text-[10px] w-16 py-1 tap-highlight-transparent">
+      <span class="text-lg">🚖</span>
+      <span>Kierowca</span>
+    </button>
+    <button onclick="switchTab('checklists')" id="nav-checklists" class="flex flex-col items-center gap-1 text-slate-400 font-medium text-[10px] w-16 py-1 tap-highlight-transparent">
+      <span class="text-lg">📋</span>
+      <span>Zadania</span>
+    </button>
+    <button onclick="switchTab('sos')" id="nav-sos" class="flex flex-col items-center gap-1 text-slate-400 font-medium text-[10px] w-16 py-1 tap-highlight-transparent">
+      <span class="text-lg">🚨</span>
+      <span>SOS</span>
+    </button>
+    <button onclick="switchTab('info')" id="nav-info" class="flex flex-col items-center gap-1 text-slate-400 font-medium text-[10px] w-16 py-1 tap-highlight-transparent">
+      <span class="text-lg">🎧</span>
+      <span>Wiedza</span>
+    </button>
+  </nav>
+
+  <script>
+    const PORTAL_DATA = {"trip": {"title": "Chiny 2026 Duo-Hub", "subtitle": "Daria & Michał • Szanghaj & Pekin", "dates": "1 – 11 Grudnia 2026 (11 Dni)", "pnr": "9BHZLH (Lufthansa / Air China)", "flights": [{"route": "Poznań (POZ) -> Frankfurt (FRA)", "flight": "LH 1373", "date": "01.12.2026 06:10 - 07:45"}, {"route": "Frankfurt (FRA) -> Szanghaj (PVG)", "flight": "LH 728", "date": "01.12.2026 17:15 - 11:35+1"}, {"route": "Pekin (PKX) -> Frankfurt (FRA)", "flight": "LH 7091", "date": "11.12.2026 14:30 - 18:55"}, {"route": "Frankfurt (FRA) -> Poznań (POZ)", "flight": "LH 1372", "date": "11.12.2026 20:45 - 22:15"}]}, "days": [{"day": 1, "date": "01.12 (Wtorek)", "city": "Podróż", "title": "Wylot z Poznania przez Frankfurt do Szanghaju", "badge": "Lot", "highlights": [{"time": "06:10", "title": "Start z Poznania (LH 1373)", "desc": "Lądowanie we Frankfurcie o 07:45."}, {"time": "17:15", "title": "Wylot do Szanghaju (LH 728)", "desc": "Nocny rejs międzykontynentalny Boeing 747-8 do Szanghaju (PVG). Czas na odsłuchanie podcastu NotebookLM!"}]}, {"day": 2, "date": "02.12 (Środa)", "city": "Szanghaj", "title": "Przylot do Szanghaju & Koncesja Francuska", "badge": "Szanghaj", "highlights": [{"time": "11:35", "title": "Lądowanie na lotnisku Pudong (PVG)", "desc": "Procedura bezwizowa 30 dni (wypełnienie niebieskiej Arrival Card, skanowanie odcisków palców, pieczątka w paszporcie).", "cardId": "pvg"}, {"time": "13:30", "title": "Check-in: Holiday Inn Hongqiao West", "desc": "Automatyczny meldunek hotelowy w systemie PSB. Krótki odpoczynek po podróży.", "cardId": "hotel_sh"}, {"time": "16:00", "title": "Spacer po Dawnej Koncesji Francuskiej", "desc": "Aleje platanowe, wille kolonialne, butiki i kawiarnie na Wukang Road (武康路).", "cardId": "wukang"}, {"time": "19:00", "title": "Kolacja w Xintiandi", "desc": "Zrewitalizowane kamienice Shikumen, kuchnia szanghajska: Xiaolongbao (pierożki z bulionem) w Din Tai Fung.", "cardId": "xintiandi"}]}, {"day": 3, "date": "03.12 (Czwartek)", "city": "Szanghaj", "title": "Targi Automechanika (NECC) & Wieczorny Bund", "badge": "Biznes", "highlights": [{"time": "09:00", "title": "Dzień Targowy: NECC Shanghai", "desc": "Targi Automechanika Shanghai w National Exhibition and Convention Center (stacja metra Xujing East).", "cardId": "necc"}, {"time": "17:30", "title": "Promenada The Bund (Waitan)", "desc": "Historyczne neoklasycystyczne gmachy bankowe i zapierający dech widok na oświetlone wieżowce Pudongu.", "cardId": "bund"}, {"time": "20:00", "title": "Kolacja z widokiem na rzekę Huangpu", "desc": "Widok na oświetloną Perłę Orientu i Shanghai Tower."}]}, {"day": 4, "date": "04.12 (Piątek)", "city": "Szanghaj", "title": "Targi NECC & Tradycyjny Szanghaj (Yu Garden)", "badge": "Biznes & Kultura", "highlights": [{"time": "09:00", "title": "Dzień Targowy II: NECC Shanghai", "desc": "Finalizacja rozmów b2b i spotkań partnerskich na Automechanice.", "cardId": "necc"}, {"time": "16:00", "title": "Ogrody Yu Garden (Yuyuan) i Stare Miasto", "desc": "Klasyczny ogród dynastii Ming z XVI w., most zygzakowaty Dziewięciu Zakrętów i herbaciarnia Huxinting.", "cardId": "yuyuan"}, {"time": "19:30", "title": "Kolacja w Tianzifang", "desc": "Artystyczny labirynt zaułków shikumen, lokalne rękodzieło, bary i autorskie restauracje.", "cardId": "tianzifang"}]}, {"day": 5, "date": "05.12 (Sobota)", "city": "Szanghaj", "title": "Futurystyczny Pudong & Sztuka M50", "badge": "Design", "highlights": [{"time": "10:00", "title": "Pudong & Shanghai Tower (Lujiazui)", "desc": "Wjazd na taras widokowy najwyższego wieżowca w Chinach (632 m).", "cardId": "shanghai_tower"}, {"time": "14:00", "title": "Dzielnica Sztuki M50 (Moganshan Road)", "desc": "Dawne zakłady tekstylne przekształcone w galerie sztuki nowoczesnej i pracownie chińskich artystów.", "cardId": "m50"}, {"time": "17:30", "title": "Promenada West Bund i Muzeum Long", "desc": "Rewitalizowane nabrzeże z monumentalnym postindustrialnym centrum kultury i designu."}]}, {"day": 6, "date": "06.12 (Niedziela)", "city": "HSR -> Pekin", "title": "Pociąg Fuxinghao (350 km/h) & Przyjazd do Pekinu", "badge": "Kolej HSR", "highlights": [{"time": "08:45", "title": "Dworzec Shanghai Hongqiao (虹桥火车站)", "desc": "Przybycie min. 60 min wcześniej! Odprawa wyłącznie w skrajnej bramce manualnej (Manual Channel z paszportem).", "cardId": "hongqiao_station"}, {"time": "10:00", "title": "Ekspres HSR G-Fuxinghao (4h 18m)", "desc": "Pokonanie 1318 km z prędkością 350 km/h do Beijing South. Dystrybutory wrzątku w wagonie."}, {"time": "14:18", "title": "Przyjazd do Pekinu (Beijing South)", "desc": "Przejazd DiDi lub metrem do hotelu w rejonie Dongcheng / Wangfujing (Jinyu Hutong).", "cardId": "beijing_south"}, {"time": "17:30", "title": "Wieczorny spacer po Hutongach wokół Gulou", "desc": "Wieża Bębna i Dzwonu, jezioro Shichahai, klimatyczne zaułki dawnego Pekinu.", "cardId": "gulou"}, {"time": "19:30", "title": "Uczta: Kaczka po pekińsku (Beijing Kaoya)", "desc": "Chrupiąca kaczka w legendarnej restauracji Siji Minfu (四季民福).", "cardId": "siji_minfu"}]}, {"day": 7, "date": "07.12 (Poniedziałek)", "city": "Pekin", "title": "Świątynia Nieba & Klasztor Lamy (Yonghegong)", "badge": "Cesarstwo", "highlights": [{"time": "09:00", "title": "Świątynia Nieba (Tiantan - 天坛)", "desc": "Pawilon Modlitwy o Urodzaj i spacer po cesarskim parku (seniorzy ćwiczący taichi i kaligrafię wodną).", "cardId": "tiantan"}, {"time": "13:00", "title": "Obiad w rejonie Qianmen", "desc": "Tradycyjne pierożki jiaozi i makaron zhajiangmian."}, {"time": "14:15", "title": "Świątynia Lamy (Yonghegong - 雍和宫)", "desc": "Aktywny klasztor buddyzmu tybetańskiego. 26-metrowy Budda Maitreja z jednego pnia sandałowca (Guinness). Darmowe kadzidła w cenie biletu! Zamyka się o 16:30 (wejście do 16:00).", "cardId": "yonghegong"}, {"time": "16:45", "title": "Ulica Guozijian & Wudaoying Hutong", "desc": "Świątynia Konfucjusza oraz modny hutong z kawiarniami specialty i herbaciarniami.", "cardId": "wudaoying"}]}, {"day": 8, "date": "08.12 (Wtorek)", "city": "Pekin", "title": "Serce Cesarstwa: Zakazane Miasto & Wzgórze Jingshan", "badge": "Must-See", "highlights": [{"time": "08:30", "title": "Brama Południowa (Meridian Gate)", "desc": "Wstęp do Zakazanego Miasta (rezerwacja z 1 grudnia 20:00 CN!). Wejście na paszport.", "cardId": "gugong"}, {"time": "09:00", "title": "Zakazane Miasto (故宫博物院)", "desc": "Monumentalna oś cesarska, Pałac Najwyższej Harmonii, Galerie Zegarów i Skarbów, Ogrody Cesarskie."}, {"time": "14:00", "title": "Park Jingshan (Wzgórze Węglowe)", "desc": "Krótkie podejście na szczyt – najwspanialsza pocztówkowa panorama złotych dachów Zakazanego Miasta.", "cardId": "jingshan"}, {"time": "18:30", "title": "Pekiński kociołek z baraniną (Shuan Yangrou)", "desc": "Tradycyjny miedziany kociołek na węgiel drzewny – idealny rozgrzewający posiłek na grudniowy wieczór."}]}, {"day": 9, "date": "09.12 (Środa)", "city": "Pekin", "title": "Wielki Mur Chiński (Mutianyu) & Dzielnica Sztuki 798", "badge": "Wielki Mur", "highlights": [{"time": "08:00", "title": "Wyjazd na Wielki Mur Mutianyu (慕田峪)", "desc": "Prywatny transfer komfortowym autem (ok. 1.5h, 75 km na północny wschód).", "cardId": "mutianyu"}, {"time": "09:45", "title": "Wjazd kolejką i trekking po grani muru", "desc": "Trasa od Wieży 14 do Wieży 20. Zjazd torem saneczkowym (toboggan) lub wyciągiem krzesełkowym!"}, {"time": "13:00", "title": "Obiad u stóp muru", "desc": "Lokalny pieczony pstrąg z górskich potoków."}, {"time": "15:30", "title": "Dzielnica Sztuki 798 (798 艺术区)", "desc": "Dawne fabryki wojskowe Bauhausu zamienione w światowe centrum chińskiej sztuki nowoczesnej.", "cardId": "art798"}]}, {"day": 10, "date": "10.12 (Czwartek)", "city": "Pekin", "title": "Letni Pałac & Zabytkowy Dashilar", "badge": "Relaks & Zakupy", "highlights": [{"time": "09:30", "title": "Letni Pałac (Yiheyuan - 颐和园)", "desc": "Zimowa rezydencja cesarzowej Cixi, Długi Korytarz, Marmurowa Łódź i widok na Jezioro Kunming.", "cardId": "yiheyuan"}, {"time": "14:30", "title": "Zabytkowa ulica Dashilar / Qianmen", "desc": "Najstarsze apteki medycyny chińskiej Tongrentang, jedwabie Ruifuxiang, renomowane herbaciarnie z jaśminem.", "cardId": "dashilar"}, {"time": "19:00", "title": "Pożegnalna kolacja w kameralnym hutongu", "desc": "Podsumowanie całej wyprawy przy tradycyjnej chińskiej herbacie i lokalnych przysmakach."}]}, {"day": 11, "date": "11.12 (Piątek)", "city": "Pekin -> Poznań", "title": "Futurystyczny Terminal Daxing & Powrót do Polski", "badge": "Powrót", "highlights": [{"time": "11:00", "title": "Przejazd na stację Caoqiao", "desc": "DiDi lub taksówką do stacji Caoqiao (草桥站).", "cardId": "caoqiao"}, {"time": "11:35", "title": "Daxing Airport Express", "desc": "Futurystyczny pociąg ekspresowy 160 km/h bezpośrednio pod terminal (19 minut)."}, {"time": "12:00", "title": "Lotnisko Pekin-Daxing (PKX)", "desc": "Monumentalny terminal autorstwa Zahy Hadid. Odprawa na rejs LH 7091.", "cardId": "daxing"}, {"time": "14:30", "title": "Start rejsu powrotnego LH 7091", "desc": "Przelot do Frankfurtu, przesiadka i lądowanie w Poznaniu o 22:15."}]}], "flashcards": [{"id": "hotel_sh", "category": "Hotel Szanghaj", "title_pl": "Holiday Inn Shanghai Hongqiao West", "hanzi": "请送到上海西郊假日酒店（青浦区沪青平公路2000号）。", "pinyin": "Qǐng sòng wǒ dào Shànghǎi Xījiāo Jiàrì Jiǔdiàn (Qīngpǔ Qū Hùqīngpíng Gōnglù 2000 hào).", "short_desc": "Hotel w Szanghaju przy NECC", "apple_map": "Holiday Inn Shanghai Hongqiao West"}, {"id": "necc", "category": "Targi Szanghaj", "title_pl": "Targi NECC (Automechanika Shanghai)", "hanzi": "请到国家会展中心（徐泾东）。", "pinyin": "Qǐng dào Guójiā Huìzhǎn Zhōngxīn (Xújīng Dōng).", "short_desc": "Główne centrum targowe NECC", "apple_map": "National Exhibition and Convention Center Shanghai"}, {"id": "bund", "category": "Atrakcja Szanghaj", "title_pl": "Promenada The Bund (Waitan)", "hanzi": "请送到上海外滩（中山东一路）。", "pinyin": "Qǐng sòng wǒ dào Shànghǎi Wàitān (Zhōngshān Dōng Yī Lù).", "short_desc": "Słynne nabrzeże z widokiem na wieżowce", "apple_map": "The Bund Shanghai"}, {"id": "wukang", "category": "Atrakcja Szanghaj", "title_pl": "Wukang Road (Koncesja Francuska)", "hanzi": "请送到武康大楼（武康路与淮海中路路口）。", "pinyin": "Qǐng sòng wǒ dào Wǔkāng Dàlóu (Wǔkāng Lù yǔ Huáihǎi Zhōng Lù lùkǒu).", "short_desc": "Zabytkowy budynek Wukang Mansion", "apple_map": "Wukang Mansion Shanghai"}, {"id": "xintiandi", "category": "Restauracje Szanghaj", "title_pl": "Xintiandi (Nowe Niebo i Ziemia)", "hanzi": "请送到新天地南里（黄陂南路）。", "pinyin": "Qǐng sòng wǒ dào Xīntiāndì Nánlǐ (Huángpí Nán Lù).", "short_desc": "Kamienice Shikumen, restauracje i butiki", "apple_map": "Xintiandi Shanghai"}, {"id": "yuyuan", "category": "Atrakcja Szanghaj", "title_pl": "Ogrody Yu Garden (Yuyuan)", "hanzi": "请送到豫园老街（福佑路口）。", "pinyin": "Qǐng sòng wǒ dào Yùyuán Lǎojiē (Fúyòu Lùkǒu).", "short_desc": "Historyczny ogród z epoki Ming", "apple_map": "Yu Garden Shanghai"}, {"id": "tianzifang", "category": "Atrakcja Szanghaj", "title_pl": "Tianzifang (Zaułki Artystyczne)", "hanzi": "请送到田子坊（泰康路210弄）。", "pinyin": "Qǐng sòng wǒ dào Tiánzǐfāng (Tàikāng Lù 210 Nòng).", "short_desc": "Artystyczne zaułki shikumen", "apple_map": "Tianzifang Shanghai"}, {"id": "shanghai_tower", "category": "Atrakcja Szanghaj", "title_pl": "Shanghai Tower (Lujiazui, Pudong)", "hanzi": "请送到上海中心大厦（银城中路501号）。", "pinyin": "Qǐng sòng wǒ dào Shànghǎi Zhōngxīn Dàshà (Yínchéng Zhōng Lù 501 hào).", "short_desc": "Najwyższy wieżowiec w Chinach (632 m)", "apple_map": "Shanghai Tower"}, {"id": "m50", "category": "Atrakcja Szanghaj", "title_pl": "M50 Creative Park (Moganshan Road)", "hanzi": "请送到莫干山路50号（M50创意园）。", "pinyin": "Qǐng sòng wǒ dào Mògānshān Lù 50 hào (M50 Chuàngyì Yuán).", "short_desc": "Kompleks galerii sztuki współczesnej", "apple_map": "M50 Creative Park Shanghai"}, {"id": "hongqiao_station", "category": "Dworzec Szanghaj", "title_pl": "Dworzec Kolejowy Szanghaj Hongqiao", "hanzi": "请送到上海虹桥火车站出发层。我是外国护照，需要走人工通道。", "pinyin": "Qǐng sòng wǒ dào Shànghǎi Hóngqiáo Huǒchēzhàn chūfā céng. Wǒ shì wàiguó hùzhào, xūyào zǒu réngōng tōngdào.", "short_desc": "Dworzec HSR do Pekinu (Bramka manualna!)", "apple_map": "Shanghai Hongqiao Railway Station"}, {"id": "pvg", "category": "Lotnisko Szanghaj", "title_pl": "Lotnisko Szanghaj Pudong (PVG) Terminal 2", "hanzi": "请送到浦东国际机场2号航站楼（出发层）。", "pinyin": "Qǐng sòng wǒ dào Pǔdōng Guójì Jīchǎng èr hào hángzhànlóu (chūfā céng).", "short_desc": "Terminal przylotowy Lufthansy", "apple_map": "Shanghai Pudong International Airport"}, {"id": "beijing_south", "category": "Dworzec Pekin", "title_pl": "Dworzec Pekin Południowy (Beijing South)", "hanzi": "请送到北京南站出发层/出租车落客平台。", "pinyin": "Qǐng sòng wǒ dào Běijīng Nánzhàn chūfā céng / chūzūchē luòkè píngtái.", "short_desc": "Stacja docelowa pociągu Fuxinghao", "apple_map": "Beijing South Railway Station"}, {"id": "gulou", "category": "Atrakcja Pekin", "title_pl": "Wieża Bębna i Dzwonu (Gulou / Shichahai)", "hanzi": "请送到鼓楼（地安门外大街）。", "pinyin": "Qǐng sòng wǒ dào Gǔlóu (Dì'ānmén Wài Dàjiē).", "short_desc": "Klimatyczne hutongi i jezioro Shichahai", "apple_map": "Drum Tower Beijing"}, {"id": "siji_minfu", "category": "Restauracje Pekin", "title_pl": "Kaczka po pekińsku (Siji Minfu)", "hanzi": "请送到四季民福烤鸭店（故宫店/王府井店）。", "pinyin": "Qǐng sòng wǒ dào Sìjì Mínfú Kǎoyā Diàn (Gùgōng diàn / Wángfǔjǐng diàn).", "short_desc": "Legendarna chrupiąca kaczka", "apple_map": "Siji Minfu Roast Duck Beijing"}, {"id": "tiantan", "category": "Atrakcja Pekin", "title_pl": "Świątynia Nieba (Tiantan)", "hanzi": "请送到天坛公园东门。两张成人门票，谢谢。", "pinyin": "Qǐng sòng wǒ dào Tiāntán Gōngyuán Dōngmén. Liǎng zhāng chéngrén ménpiào, xièxie.", "short_desc": "Cesarski ołtarz modlitwy o urodzaj", "apple_map": "Temple of Heaven Beijing"}, {"id": "yonghegong", "category": "Atrakcja Pekin", "title_pl": "Świątynia Lamy (Yonghegong)", "hanzi": "请送到雍和宫（雍和宫大街12号）。", "pinyin": "Qǐng sòng wǒ dào Yōnghé Gōng (Yōnghé Gōng Dàjiē 12 hào).", "short_desc": "Klasztor buddyzmu tybetańskiego (czynna w poniedziałki!)", "apple_map": "Yonghe Temple Beijing"}, {"id": "wudaoying", "category": "Atrakcja Pekin", "title_pl": "Wudaoying Hutong & Ulica Guozijian", "hanzi": "请送到五道营胡同东口（靠近雍和宫）。", "pinyin": "Qǐng sòng wǒ dào Wǔdàoyíng Hútong dōngkǒu (kàojìn Yōnghé Gōng).", "short_desc": "Kawiarnie specialty, rzemiosło i herbaciarnie", "apple_map": "Wudaoying Hutong Beijing"}, {"id": "gugong", "category": "Atrakcja Pekin", "title_pl": "Zakazane Miasto (Brama Południkowa - Meridian Gate)", "hanzi": "请送到故宫南门（午门入口处）。我们已网上预约，持护照进入。", "pinyin": "Qǐng sòng wǒ dào Gùgōng Nánmén (Wǔmén rùkǒuchù). Wǒmen yǐ wǎngshàng yùyuē, chí hùzhào jìnrù.", "short_desc": "Oficjalne wejście do Pałacu Cesarskiego", "apple_map": "Meridian Gate Forbidden City"}, {"id": "jingshan", "category": "Atrakcja Pekin", "title_pl": "Park Jingshan (Wzgórze Węglowe)", "hanzi": "请送到景山公园南门（景山西街）。", "pinyin": "Qǐng sòng wǒ dào Jǐngshān Gōngyuán Nánmén (Jǐngshān Xījiē).", "short_desc": "Najlepsza panorama Zakazanego Miasta ze szczytu", "apple_map": "Jingshan Park Beijing"}, {"id": "mutianyu", "category": "Atrakcja Pekin", "title_pl": "Wielki Mur Chiński (Odcinek Mutianyu)", "hanzi": "请送到慕田峪长城售票处及缆车站。", "pinyin": "Qǐng sòng wǒ dào Mùtiányù Chángchéng shòupiàochù jí lǎndiàn zhàn.", "short_desc": "Wielki Mur Chiński, wjazd kolejką, zjazd tobogganem", "apple_map": "Mutianyu Great Wall"}, {"id": "art798", "category": "Atrakcja Pekin", "title_pl": "Dzielnica Sztuki 798 (Dashanzi)", "hanzi": "请送到798艺术区4号门（酒仙桥路）。", "pinyin": "Qǐng sòng wǒ dào Qījiǔbā Yìshùqū sì hào mén (Jiǔxiānqiáo Lù).", "short_desc": "Fabryki Bauhausu i sztuka nowoczesna", "apple_map": "798 Art Zone Beijing"}, {"id": "yiheyuan", "category": "Atrakcja Pekin", "title_pl": "Letni Pałac (Brama Beigongmen)", "hanzi": "请送到颐和园北宫门（近4号线北宫门地铁站）。", "pinyin": "Qǐng sòng wǒ dào Yíhéyuán Běigōngmén (jìn sì hào xiàn Běigōngmén dìtiězhàn).", "short_desc": "Zimowa rezydencja Cixi nad jeziorem Kunming", "apple_map": "Summer Palace Beijing"}, {"id": "dashilar", "category": "Atrakcja Pekin", "title_pl": "Zabytkowa Ulica Dashilar (Qianmen)", "hanzi": "请送到大栅栏商业街（前门步行街口）。", "pinyin": "Qǐng sòng wǒ dào Dàzhālan Shāngyèjiē (Qiánmén Bùxíngjiē kǒu).", "short_desc": "Historyczna ulica handlowa, jedwab i apteki cesarskie", "apple_map": "Dashilar Beijing"}, {"id": "caoqiao", "category": "Transport Pekin", "title_pl": "Stacja Metra Caoqiao (Ekspres na Daxing)", "hanzi": "请送到草桥地铁站（大兴机场线进站口）。", "pinyin": "Qǐng sòng wǒ dào Cǎoqiáo Dìtiězhàn (Dàxīng Jīchǎng xiàn jìnzhàn kǒu).", "short_desc": "Szybki pociąg 19 minut na lotnisko Daxing", "apple_map": "Caoqiao Station Beijing"}, {"id": "daxing", "category": "Lotnisko Pekin", "title_pl": "Lotnisko Pekin-Daxing (PKX)", "hanzi": "请送到北京大兴国际机场（国际出发层4层）。", "pinyin": "Qǐng sòng wǒ dào Běijīng Dàxīng Guójì Jīchǎng (Guójì chūfā céng sì céng).", "short_desc": "Futurystyczny terminal Zahy Hadid", "apple_map": "Beijing Daxing International Airport"}], "checklists": {"przed_wylotem": [{"id": "c1", "text": "Paszporty ważne minimum 6 miesięcy od daty powrotu (do czerwca 2027)", "owner": "Wspólne"}, {"id": "c2", "text": "Weryfikacja ruchu bezwizowego (do 30 dni dla obywateli RP - wjazd bez wizy)", "owner": "Wspólne"}, {"id": "c3", "text": "Zainstalowanie aplikacji Alipay i podpięcie kart Visa / Mastercard", "owner": "Michał & Daria"}, {"id": "c4", "text": "Zainstalowanie WeChat i weryfikacja profilu (oraz podpięcie karty WeChat Pay)", "owner": "Michał & Daria"}, {"id": "c5", "text": "Zakup zagranicznego pakietu eSIM (Airalo / Holafly / Nomad) – działa bez VPN!", "owner": "Michał & Daria"}, {"id": "c6", "text": "Instalacja sprawdzonego VPN na wypadek hotelowego Wi-Fi (Astrill / LetsVPN / Mullvad)", "owner": "Michał"}, {"id": "c7", "text": "Pobranie map offline (Apple Maps na iPhone, Amap/Gaode na Samsunga)", "owner": "Wspólne"}, {"id": "c8", "text": "Zapisanie biletów lotniczych (PNR: 9BHZLH) w Apple Wallet / Google Wallet", "owner": "Wspólne"}], "rezerwacje": [{"id": "c9", "text": "Rezerwacja pociągu HSR Shanghai Hongqiao -> Beijing South (14 dni przed: 22.11)", "owner": "Michał"}, {"id": "c10", "text": "Rezerwacja Zakazanego Miasta (dokładnie 1 grudnia o 20:00 CN / 13:00 PL!)", "owner": "Michał & Daria"}, {"id": "c11", "text": "Rezerwacja prywatnego transferu na Wielki Mur Mutianyu (u concierge lub DiDi)", "owner": "Wspólne"}, {"id": "c12", "text": "Rezerwacja biletów wejściowych na Świątynię Nieba i Letni Pałac", "owner": "Wspólne"}], "pakowanie": [{"id": "c13", "text": "Powerbank (max 20 000 mAh z widocznym certyfikatem Wh – chińskie lotniska konfiskują bez napisu!)", "owner": "Wspólne"}, {"id": "c14", "text": "Rezerwa gotówkowa: 500–1000 RMB na osobę w drobnych banknotach (20, 50, 100 RMB)", "owner": "Wspólne"}, {"id": "c15", "text": "Uniwersalny adapter do gniazdek (w Chinach gniazdka typu A/C/I)", "owner": "Michał"}, {"id": "c16", "text": "Wygodne buty trekkingowe na schody Wielkiego Muru i kamienne dziedzińce", "owner": "Daria & Michał"}, {"id": "c17", "text": "Ciepła odzież warstwowa (grudzień w Pekinie: -5°C do +5°C, suchy wiatr z północy)", "owner": "Daria & Michał"}, {"id": "c18", "text": "Leki osobiste w oryginalnych opakowaniach z ulotkami", "owner": "Daria & Michał"}]}, "sos": {"emergency_numbers": [{"label": "Policja (Chiny)", "number": "110", "note": "Połączenie bezpłatne"}, {"label": "Pogotowie ratunkowe", "number": "120", "note": "W nagłych wypadkach zdrowotnych"}, {"label": "Straż pożarna", "number": "119", "note": "Pożary i ratownictwo"}], "consulates": [{"city": "Pekin (Ambasada RP)", "address": "1 Ritan Lu, Jianguomenwai, Chaoyang District, Beijing", "phone_emergency": "+86 186 1253 2340", "phone_office": "+86 10 6532 1235", "hanzi": "波兰驻华大使馆（北京市朝阳区建国门外日坛路1号）。"}, {"city": "Szanghaj (Konsulat Generalny RP)", "address": "618 Jianguo West Road, Xuhui District, Shanghai", "phone_emergency": "+86 138 1792 0940", "phone_office": "+86 21 6433 9288", "hanzi": "波兰驻上海总领事馆（上海市徐汇区建国西路618号）。"}], "hospitals": [{"name": "United Family Hospital Beijing (Międzynarodowy)", "address": "2 Jiangtai Road, Chaoyang District, Beijing", "phone": "+86 10 5927 7120", "hanzi": "北京和睦家医院（朝阳区将台路2号）。"}, {"name": "United Family Hospital Shanghai (Międzynarodowy)", "address": "1111 Xianxia Road, Changning District, Shanghai", "phone": "+86 21 2216 3999", "hanzi": "上海和睦家医院（长宁区仙霞路1111号）。"}]}};
+
+    let activeDayIndex = 0;
+    let activeFlashcard = null;
+    let activeChecklistCategory = 'przed_wylotem';
+
+    // State persistence
+    const STORAGE_KEY_CHECKLIST = 'chiny_duo_checklist_v1';
+    let checkedItems = JSON.parse(localStorage.getItem(STORAGE_KEY_CHECKLIST) || '{}');
+
+    function init() {
+      renderDaysSelector();
+      renderActiveDay();
+      renderFlashcards();
+      renderChecklist();
+      setupSearch();
+      registerSW();
+    }
+
+    function switchTab(tabId) {
+      const tabs = ['schedule', 'flashcards', 'checklists', 'sos', 'info'];
+      tabs.forEach(t => {
+        document.getElementById(`tab-${t}`).classList.add('hidden');
+        const navBtn = document.getElementById(`nav-${t}`);
+        navBtn.classList.remove('text-red-500', 'font-semibold');
+        navBtn.classList.add('text-slate-400', 'font-medium');
+      });
+
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`nav-${tabId}`);
+      activeBtn.classList.add('text-red-500', 'font-semibold');
+      activeBtn.classList.remove('text-slate-400', 'font-medium');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderDaysSelector() {
+      const container = document.getElementById('days-selector');
+      container.innerHTML = PORTAL_DATA.days.map((d, idx) => {
+        const isSelected = idx === activeDayIndex;
+        return `
+          <button onclick="selectDay(${idx})" class="flex-shrink-0 px-3 py-2 rounded-xl text-left transition ${
+            isSelected 
+              ? 'bg-gradient-to-br from-red-700 to-red-900 border border-red-500/80 text-white shadow-md' 
+              : 'bg-slate-900 border border-slate-800 text-slate-400'
+          }">
+            <div class="text-[10px] uppercase font-bold tracking-wider opacity-80">Dzień ${d.day}</div>
+            <div class="text-xs font-bold leading-tight ${isSelected ? 'text-white' : 'text-slate-200'}">${d.date.split(' ')[0]}</div>
+            <div class="text-[9px] truncate max-w-[70px] opacity-75">${d.city}</div>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectDay(idx) {
+      activeDayIndex = idx;
+      renderDaysSelector();
+      renderActiveDay();
+    }
+
+    function renderActiveDay() {
+      const day = PORTAL_DATA.days[activeDayIndex];
+      const container = document.getElementById('active-day-content');
+      
+      container.innerHTML = `
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 shadow-sm">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs uppercase font-bold tracking-wider text-amber-400">${day.date} • ${day.city}</span>
+            <span class="text-[10px] bg-slate-800 text-slate-300 border border-slate-700 px-2 py-0.5 rounded-full font-medium">${day.badge}</span>
+          </div>
+          <h2 class="text-base font-bold text-white mb-3">${day.title}</h2>
+          
+          <div class="relative border-l-2 border-red-900/60 ml-2.5 pl-4 space-y-4">
+            ${day.highlights.map(h => `
+              <div class="relative">
+                <span class="absolute -left-[23px] top-1 w-3 h-3 rounded-full bg-red-600 border-2 border-slate-950"></span>
+                <div class="text-xs font-bold text-amber-300">${h.time} — ${h.title}</div>
+                <div class="text-xs text-slate-300 mt-0.5 leading-relaxed">${h.desc}</div>
+                ${h.cardId ? `
+                  <button onclick="openCardById('${h.cardId}')" class="mt-2 inline-flex items-center gap-1.5 text-[11px] font-semibold bg-red-950/80 hover:bg-red-900 text-red-200 border border-red-700/60 px-2.5 py-1 rounded-lg active:scale-95 transition">
+                    🚖 Pokaż kierowcy (Hanzi)
+                  </button>
+                ` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderFlashcards(filter = '') {
+      const container = document.getElementById('flashcards-list');
+      const filtered = PORTAL_DATA.flashcards.filter(c => {
+        const query = filter.toLowerCase();
+        return c.title_pl.toLowerCase().includes(query) ||
+               c.category.toLowerCase().includes(query) ||
+               c.pinyin.toLowerCase().includes(query) ||
+               c.short_desc.toLowerCase().includes(query);
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="text-xs text-slate-500 text-center py-6">Brak wyników wyszukiwania.</div>';
+        return;
+      }
+
+      container.innerHTML = filtered.map(c => `
+        <div onclick="openFlashcardModal('${c.id}')" class="p-3 bg-slate-900/90 border border-slate-800/90 hover:border-red-600/60 rounded-xl cursor-pointer active:scale-[0.98] transition space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">${c.category}</span>
+            <span class="text-xs text-slate-500">Dotknij aby powiększyć ➔</span>
+          </div>
+          <div class="text-xs font-bold text-white">${c.title_pl}</div>
+          <div class="text-sm font-semibold text-slate-200 font-sans truncate">${c.hanzi}</div>
+          <div class="text-[11px] font-mono text-slate-400 truncate">${c.pinyin}</div>
+        </div>
+      `).join('');
+    }
+
+    function setupSearch() {
+      const input = document.getElementById('flashcard-search');
+      input.addEventListener('input', (e) => {
+        renderFlashcards(e.target.value);
+      });
+    }
+
+    function openCardById(cardId) {
+      openFlashcardModal(cardId);
+    }
+
+    function openFlashcardModal(cardId) {
+      const card = PORTAL_DATA.flashcards.find(c => c.id === cardId);
+      if (!card) return;
+      activeFlashcard = card;
+
+      document.getElementById('modal-category').innerText = card.category;
+      document.getElementById('modal-title-pl').innerText = card.title_pl;
+      document.getElementById('modal-hanzi').innerText = card.hanzi;
+      document.getElementById('modal-pinyin').innerText = card.pinyin;
+      document.getElementById('flashcard-modal').classList.remove('hidden');
+    }
+
+    function closeFlashcardModal() {
+      document.getElementById('flashcard-modal').classList.add('hidden');
+      activeFlashcard = null;
+    }
+
+    function speakChinese() {
+      if (!activeFlashcard || !('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(activeFlashcard.hanzi);
+      utterance.lang = 'zh-CN';
+      utterance.rate = 0.85;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function copyHanziText() {
+      if (!activeFlashcard) return;
+      navigator.clipboard.writeText(activeFlashcard.hanzi).then(() => {
+        const btn = document.getElementById('btn-copy-hanzi');
+        btn.innerText = '✅ Skopiowano!';
+        setTimeout(() => {
+          btn.innerText = '📋 Kopiuj Znaki';
+        }, 1800);
+      });
+    }
+
+    function openAppleMaps() {
+      if (!activeFlashcard) return;
+      const q = encodeURIComponent(activeFlashcard.apple_map || activeFlashcard.title_pl);
+      // Apple Maps on iOS or fallback web
+      window.open(`https://maps.apple.com/?q=${q}`, '_blank');
+    }
+
+    // CHECKLIST LOGIC
+    function switchChecklistCategory(cat) {
+      activeChecklistCategory = cat;
+      ['przed', 'rez', 'pak'].forEach(c => {
+        document.getElementById(`btn-cat-${c}`).className = 'px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 font-medium';
+      });
+      const map = {'przed_wylotem': 'przed', 'rezerwacje': 'rez', 'pakowanie': 'pak'};
+      document.getElementById(`btn-cat-${map[cat]}`).className = 'px-2.5 py-1 rounded-lg bg-red-800 text-white font-medium';
+      renderChecklist();
+    }
+
+    function renderChecklist() {
+      const items = PORTAL_DATA.checklists[activeChecklistCategory] || [];
+      const container = document.getElementById('checklist-items');
+
+      container.innerHTML = items.map(item => {
+        const isDone = !!checkedItems[item.id];
+        return `
+          <div onclick="toggleChecklistItem('${item.id}')" class="p-3 bg-slate-900 border ${isDone ? 'border-emerald-800/60 bg-emerald-950/20' : 'border-slate-800'} rounded-xl flex items-start gap-3 cursor-pointer transition select-none">
+            <div class="mt-0.5 w-5 h-5 rounded-md border ${isDone ? 'bg-emerald-600 border-emerald-500 text-white' : 'border-slate-600'} flex items-center justify-center text-xs font-bold">
+              ${isDone ? '✓' : ''}
+            </div>
+            <div class="flex-1">
+              <div class="text-xs ${isDone ? 'line-through text-slate-400' : 'text-slate-100'} leading-relaxed font-medium">
+                ${item.text}
+              </div>
+              <div class="text-[10px] text-amber-400 font-semibold mt-0.5">${item.owner}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      updateChecklistProgress();
+    }
+
+    function toggleChecklistItem(id) {
+      checkedItems[id] = !checkedItems[id];
+      localStorage.setItem(STORAGE_KEY_CHECKLIST, JSON.stringify(checkedItems));
+      renderChecklist();
+    }
+
+    function updateChecklistProgress() {
+      let total = 0;
+      let done = 0;
+      Object.keys(PORTAL_DATA.checklists).forEach(cat => {
+        PORTAL_DATA.checklists[cat].forEach(item => {
+          total++;
+          if (checkedItems[item.id]) done++;
+        });
+      });
+      document.getElementById('checklist-progress').innerText = `${done}/${total} wykonane`;
+    }
+
+    function registerSW() {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => {
+            console.log('ServiceWorker zarejestrowany:', reg.scope);
+          })
+          .catch(err => {
+            console.warn('Błąd ServiceWorkera:', err);
+          });
+      }
+
+      window.addEventListener('online', updateNetworkStatus);
+      window.addEventListener('offline', updateNetworkStatus);
+      updateNetworkStatus();
+    }
+
+    function updateNetworkStatus() {
+      const badge = document.getElementById('offline-badge');
+      if (navigator.onLine) {
+        badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Pamięć PWA';
+        badge.className = 'flex items-center gap-1 text-[11px] bg-emerald-950/80 text-emerald-300 border border-emerald-800/60 px-2 py-0.5 rounded-full font-medium';
+      } else {
+        badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> 100% Offline';
+        badge.className = 'flex items-center gap-1 text-[11px] bg-amber-950/80 text-amber-300 border border-amber-800/60 px-2 py-0.5 rounded-full font-medium';
+      }
+    }
+
+    // Auto-init on load
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
