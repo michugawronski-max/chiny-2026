@@ -66,15 +66,49 @@
         <p class="text-[11px] text-slate-400">1–11 Grudnia • Szanghaj & Pekin</p>
       </div>
     </div>
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-1.5">
+      <a href="https://gemini.google.com/gem/1VArWjkGHCpLmlei7QhhrlWcCkFDlTmpS?usp=sharing" target="_blank" class="flex items-center gap-1 text-[11px] bg-blue-600/25 text-blue-200 border border-blue-500/40 px-2 py-0.5 rounded-full font-medium hover:border-blue-400 active:scale-95 transition">
+        🤖 Gem
+      </a>
+      <a href="https://notebook.google.com/notebook/f0bb7098-4913-4022-8701-f11d0767a019" target="_blank" class="flex items-center gap-1 text-[11px] bg-amber-600/25 text-amber-200 border border-amber-500/40 px-2 py-0.5 rounded-full font-medium hover:border-amber-400 active:scale-95 transition">
+        📚 Baza
+      </a>
       <span id="offline-badge" class="flex items-center gap-1 text-[11px] bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 px-2 py-0.5 rounded-full font-medium">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Offline Ready
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Offline
       </span>
     </div>
   </header>
 
   <!-- MAIN CONTAINER -->
   <main class="max-w-md mx-auto px-4 pt-3 pb-8">
+
+    <!-- 3-IN-1 ECOSYSTEM LAUNCHER -->
+    <div class="bg-gradient-to-r from-slate-900/95 via-slate-900 to-slate-900/95 border border-slate-800 rounded-2xl p-2.5 mb-3 shadow-md">
+      <div class="flex items-center justify-between mb-2 px-1">
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+          ✨ Ekosystem Wyprawy (3 w 1)
+        </span>
+        <button onclick="switchTab('info')" class="text-[10px] text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-0.5">
+          Wszystkie 3 narzędzia &rarr;
+        </button>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <a href="https://gemini.google.com/gem/1VArWjkGHCpLmlei7QhhrlWcCkFDlTmpS?usp=sharing" target="_blank" class="flex items-center gap-2 p-2 rounded-xl bg-gradient-to-br from-blue-950/60 to-indigo-950/50 border border-blue-500/35 hover:border-blue-400 text-blue-200 active:scale-95 transition shadow-sm">
+          <span class="text-lg">🤖</span>
+          <div class="text-left overflow-hidden">
+            <div class="text-[11px] font-bold text-white truncate">Asystent Gem</div>
+            <div class="text-[9px] text-blue-300/80 truncate">Czat na żywo & OCR ➔</div>
+          </div>
+        </a>
+        <a href="https://notebook.google.com/notebook/f0bb7098-4913-4022-8701-f11d0767a019" target="_blank" class="flex items-center gap-2 p-2 rounded-xl bg-gradient-to-br from-amber-950/60 to-orange-950/50 border border-amber-500/35 hover:border-amber-400 text-amber-200 active:scale-95 transition shadow-sm">
+          <span class="text-lg">📚</span>
+          <div class="text-left overflow-hidden">
+            <div class="text-[11px] font-bold text-white truncate">NotebookLM</div>
+            <div class="text-[9px] text-amber-300/80 truncate">Baza & Podcast ➔</div>
+          </div>
+        </a>
+      </div>
+    </div>
 
     <!-- TAB 1: HARMONOGRAM (DNI) -->
     <section id="tab-schedule" class="space-y-4">
@@ -217,31 +251,100 @@
       </div>
     </section>
 
-    <!-- TAB 5: O PODRÓŻY & AUDIO PODCAST -->
+    <!-- TAB 5: CENTRUM AI & WIEDZA (3 W 1) -->
     <section id="tab-info" class="hidden space-y-4">
-      <div class="bg-gradient-to-br from-amber-950/40 via-slate-900 to-slate-900 border border-amber-800/40 rounded-2xl p-4 shadow-md space-y-3">
-        <h2 class="text-sm font-bold text-amber-300 flex items-center gap-2">
-          🎧 Podcast Audio (NotebookLM Deep Dive)
-        </h2>
+      <!-- ECOSYSTEM HEADER -->
+      <div class="bg-gradient-to-r from-red-950/70 via-slate-900 to-amber-950/70 border border-red-800/50 rounded-2xl p-4 shadow-md text-center space-y-1.5">
+        <div class="text-xs uppercase font-bold tracking-widest text-amber-300">Wspólne Centrum Podróży</div>
+        <h2 class="text-base font-extrabold text-white">Twój Ekosystem Podróżny (3 w 1)</h2>
         <p class="text-xs text-slate-300 leading-relaxed">
-          12-minutowe podsumowanie audio wygenerowane przez AI specjalnie dla Was na czas 10-godzinnego lotu do Szanghaju.
+          Wszystko, czego potrzebujecie z Darią w Szanghaju i Pekinie. Z tego jednego portalu macie bezpośredni dostęp do asystenta na żywo oraz pełnej bazy wiedzy.
         </p>
-        <div class="p-3 bg-slate-950/90 rounded-xl border border-slate-800 flex items-center justify-between">
-          <div>
-            <div class="text-xs font-bold text-white">Chiny 2026: Szanghaj & Pekin</div>
-            <div class="text-[11px] text-slate-400">Deep Dive Podcast • 12:45 min</div>
+      </div>
+
+      <!-- TOOL 1: ASYSTENT AI GEMINI GEM -->
+      <div class="bg-gradient-to-br from-blue-950/60 via-slate-900 to-purple-950/50 border border-blue-500/40 rounded-2xl p-4 shadow-md space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">🤖</span>
+            <div>
+              <h3 class="text-sm font-bold text-blue-300">1. Asystent Gemini AI (Gem)</h3>
+              <p class="text-[10px] text-blue-200/70">Osobisty doradca w kieszeni na smartfonie</p>
+            </div>
           </div>
-          <span class="text-xs bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2 py-1 rounded-lg font-medium">MP3 Gotowe</span>
+          <span class="text-[10px] bg-blue-500/20 text-blue-300 border border-blue-500/40 px-2 py-0.5 rounded-full font-bold">CZAT & KAMERA</span>
         </div>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Model AI wyszkolony na Waszym planie, przepisach i kulturze Chin. Możecie z nim czatować głosowo i tekstowo na telefonie, robić zdjęcia menu w restauracji (rozpoznaje chińskie dania i ostrzega o ostrości) oraz pytać o cokolwiek na bieżąco.
+        </p>
+        <a href="https://gemini.google.com/gem/1VArWjkGHCpLmlei7QhhrlWcCkFDlTmpS?usp=sharing" target="_blank" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-2 active:scale-95 transition shadow-lg shadow-blue-900/40 text-center">
+          ✨ Otwórz Asystenta w Google Gemini ➔
+        </a>
+      </div>
+
+      <!-- TOOL 2: BAZA WIEDZY NOTEBOOKLM & PODCAST -->
+      <div class="bg-gradient-to-br from-amber-950/50 via-slate-900 to-slate-900 border border-amber-800/40 rounded-2xl p-4 shadow-md space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">📚</span>
+            <div>
+              <h3 class="text-sm font-bold text-amber-300">2. Encyklopedia & Podcast (NotebookLM)</h3>
+              <p class="text-[10px] text-amber-200/70">Wielka baza wiedzy & Audio Overview</p>
+            </div>
+          </div>
+          <span class="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2 py-0.5 rounded-full font-bold">6 ŹRÓDEŁ</span>
+        </div>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Kompletna baza faktograficzna z 6 załadowanymi tomami wiedzy: historia Zakazanego Miasta, Wielkiego Muru, Szanghaju, przewodnik po stoiskach Automechanika Shanghai 2026 (Dr.Motor) oraz prawo i płatności.
+        </p>
+        <div class="p-3 bg-slate-950/90 rounded-xl border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="text-xs font-bold text-white flex items-center gap-1.5">
+              <span>🎧</span> <span>Podcast Audio Deep Dive (12-15 min)</span>
+            </div>
+            <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded font-mono">NA LOT B747</span>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">
+            W notatniku kliknij po prawej stronie <strong>„Generate Audio Overview”</strong> – wygeneruje profesjonalny, dwugłosowy podcast do posłuchania w samolocie!
+          </p>
+        </div>
+        <a href="https://notebook.google.com/notebook/f0bb7098-4913-4022-8701-f11d0767a019" target="_blank" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold text-xs flex items-center justify-center gap-2 active:scale-95 transition shadow-lg shadow-amber-900/40 text-center">
+          📖 Wejdź do Bazy Wiedzy NotebookLM ➔
+        </a>
+      </div>
+
+      <!-- TOOL 3: MOBILNY PORTAL PWA (TEN PORTAL) -->
+      <div class="bg-gradient-to-br from-emerald-950/40 via-slate-900 to-slate-900 border border-emerald-800/40 rounded-2xl p-4 shadow-md space-y-2.5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">📱</span>
+            <div>
+              <h3 class="text-sm font-bold text-emerald-300">3. Mobilny Portal Podróżny (PWA)</h3>
+              <p class="text-[10px] text-emerald-200/70">Ten portal – baza offline w Twoim telefonie</p>
+            </div>
+          </div>
+          <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded-full font-bold">OFFLINE READY</span>
+        </div>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Strona, na której teraz jesteś, działa w 100% offline (dzięki Service Worker). Po dodaniu do ekranu początkowego iPhone/Android masz natychmiastowy dostęp do:
+        </p>
+        <ul class="text-[11px] text-slate-400 space-y-1 list-disc list-inside">
+          <li>Fiszek adresowych z chińskim lektorem dla kierowców taksówek</li>
+          <li>Harmonogramu dzień po dniu i numerów rezerwacji (loty, hotele)</li>
+          <li>Checklisty pakowania z zapisem postępów w telefonie</li>
+          <li>Bezpośrednich numerów alarmowych i konsulatów RP w Pekinie i Szanghaju</li>
+        </ul>
       </div>
 
       <!-- General tips -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 text-xs text-slate-300 leading-relaxed">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-white">Złote Zasady w Chinach</h3>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-white">Złote Zasady w Chinach (2026)</h3>
         <ul class="space-y-1.5 list-disc list-inside text-slate-400">
+          <li><strong class="text-slate-200">Ruch bezwizowy:</strong> Do 30 dni pobytu na paszporcie RP – bez opłat i wiz.</li>
           <li><strong class="text-slate-200">Kolej HSR:</strong> Przybądź na dworzec 60 min wcześniej; kieruj się do skrajnej bramki manualnej z paszportem.</li>
           <li><strong class="text-slate-200">Świątynia Lamy (Yonghegong):</strong> Otwarta w poniedziałki! Wejście do 16:00. Darmowe kadzidła w cenie biletu – nie kupuj na ulicy.</li>
           <li><strong class="text-slate-200">Zakazane Miasto:</strong> Wtorek 8 grudnia – wstęp tylko z wcześniejszą rezerwacją WeChat.</li>
+          <li><strong class="text-slate-200">Płatności WeChat / Alipay:</strong> Poniżej 200 RMB prowizja 0%; powyżej 200 RMB +3%.</li>
           <li><strong class="text-slate-200">Herbata i toasty:</strong> Brzeg Twojego kieliszka trzymaj niżej niż gospodarza na znak szacunku.</li>
         </ul>
       </div>
@@ -298,8 +401,8 @@
       <span>SOS</span>
     </button>
     <button onclick="switchTab('info')" id="nav-info" class="flex flex-col items-center gap-1 text-slate-400 font-medium text-[10px] w-16 py-1 tap-highlight-transparent">
-      <span class="text-lg">🎧</span>
-      <span>Wiedza</span>
+      <span class="text-lg">✨</span>
+      <span>Centrum AI</span>
     </button>
   </nav>
 
